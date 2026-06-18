@@ -1,4 +1,4 @@
-export type AuthUser = {
+﻿export type AuthUser = {
   id: number;
   username: string;
   email: string;
@@ -55,6 +55,7 @@ export type Article = {
   cover?: UploadFile | UploadFile[] | null;
   category?: Category | null;
   author?: AuthUser | null;
+  comments?: Array<{ id: number; documentId?: string }>;
   createdAt?: string;
   updatedAt?: string;
   publishedAt?: string | null;

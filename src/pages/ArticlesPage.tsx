@@ -1,25 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Edit2, MapPin, PenSquare, Search, Sparkles, Trash2 } from 'lucide-react';
+import { Edit2, PenSquare, Search, Sparkles, Trash2 } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card, CardContent, CardDescription, CardTitle } from '../components/ui/Card';
 import { ErrorText } from '../components/ui/ErrorText';
 import { Input } from '../components/ui/Input';
 import { Select } from '../components/ui/Select';
+import { ArticlePreviewCard } from '../components/ui/ArticlePreviewCard';
 import { ArticleFormModal } from '../components/ui/ArticleFormModal';
 import { DeleteConfirmModal } from '../components/ui/DeleteConfirmModal';
 import { useArticlesQuery, useCategoriesQuery } from '../features/articles/store/articleQueries';
 import { useArticleStore } from '../features/articles/store/articleStore';
 import { useAuthStore } from '../features/auth/store/authStore';
-import { getMediaUrl } from '../lib/strapi';
-
-function pickCover(article: { cover_image_url?: string; cover?: unknown }) {
-  if (article.cover_image_url) return getMediaUrl(article.cover_image_url);
-  const cover = article.cover as { url?: string } | Array<{ url?: string }> | undefined;
-  if (Array.isArray(cover) && cover[0]?.url) return getMediaUrl(cover[0].url);
-  if (cover && typeof cover === 'object' && 'url' in cover && typeof cover.url === 'string') return getMediaUrl(cover.url);
-  return '';
-}
 
 export function ArticlesPage() {
   const { page, pageSize, search, categoryId, sort, setSearch, setCategoryId } = useArticleStore();
@@ -138,9 +130,9 @@ export function ArticlesPage() {
               <Card key={index} className="animate-pulse border-white/60 bg-white/72">
                 <div className="aspect-4/3 bg-white/50" />
                 <div className="flex flex-1 flex-col gap-3 p-5">
-                  <div className="h-5 w-24 rounded-full bg-white/60" />
+                  <div className="h-5 w-36 rounded-full bg-white/60" />
                   <div className="h-4 w-2/3 rounded bg-white/60" />
-                  <div className="h-12 w-full rounded bg-white/60" />
+                  <div className="h-10 w-full rounded bg-white/60" />
                   <div className="mt-auto h-10 w-full rounded-2xl bg-white/60" />
                 </div>
               </Card>
@@ -150,49 +142,21 @@ export function ArticlesPage() {
           <>
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
               {articles.map((article) => (
-                <Card key={article.documentId} className="group h-full border-white/70 bg-white/88 shadow-[0_24px_60px_rgba(31,42,46,0.06)] transition duration-200 hover:-translate-y-1.5 hover:shadow-[0_30px_70px_rgba(31,42,46,0.12)]">
-                  <div className="relative aspect-4/3 overflow-hidden">
-                    <div
-                      className="h-full w-full bg-linear-to-br from-stone-200 to-orange-100 bg-cover bg-center transition duration-500 group-hover:scale-[1.04]"
-                      style={pickCover(article) ? { backgroundImage: `url(${pickCover(article)})` } : undefined}
-                    />
-                    <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-slate-950/18 via-transparent to-transparent" />
-                  </div>
-                  <CardContent className="flex flex-1 flex-col gap-4 p-5">
-                    <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
-                      <span className="inline-flex rounded-full bg-slate-100 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-700">
-                        {article.category?.name ?? 'Travel'}
-                      </span>
-                      <span className="inline-flex items-center gap-1">
-                        <MapPin className="h-3.5 w-3.5" />
-                        {article.location ?? 'Lokasi belum tersedia'}
-                      </span>
-                    </div>
-                    <div className="flex-1 space-y-2">
-                      <h2 className="line-clamp-2 text-lg font-bold leading-tight tracking-tight text-slate-900">{article.title}</h2>
-                      <p className="line-clamp-3 text-sm leading-6 text-slate-600">
-                        {article.description ?? 'Artikel travel ini membantu pengguna memahami karakter destinasi sebelum berkunjung.'}
-                      </p>
-                    </div>
-                    <div className="mt-auto flex flex-col gap-2">
-                      <Button asChild variant="secondary" className="w-full rounded-2xl">
-                        <Link to={`/article/${article.documentId}`}>Baca detail</Link>
+                <div key={article.documentId} className="flex flex-col gap-2">
+                  <ArticlePreviewCard article={article} actionLabel="Baca detail" />
+                  {token ? (
+                    <div className="grid grid-cols-2 gap-2">
+                      <Button variant="outline" size="sm" onClick={() => handleEditClick(article)} className="rounded-2xl text-teal-700 hover:bg-teal-50">
+                        <Edit2 className="h-3.5 w-3.5" />
+                        Edit
                       </Button>
-                      {token ? (
-                        <div className="grid grid-cols-2 gap-2">
-                          <Button variant="outline" size="sm" onClick={() => handleEditClick(article)} className="rounded-2xl text-teal-700 hover:bg-teal-50">
-                            <Edit2 className="h-3.5 w-3.5" />
-                            Edit
-                          </Button>
-                          <Button variant="outline" size="sm" onClick={() => handleDeleteClick(article.documentId)} className="rounded-2xl text-rose-600 hover:bg-rose-50">
-                            <Trash2 className="h-3.5 w-3.5" />
-                            Hapus
-                          </Button>
-                        </div>
-                      ) : null}
+                      <Button variant="outline" size="sm" onClick={() => handleDeleteClick(article.documentId)} className="rounded-2xl text-rose-600 hover:bg-rose-50">
+                        <Trash2 className="h-3.5 w-3.5" />
+                        Hapus
+                      </Button>
                     </div>
-                  </CardContent>
-                </Card>
+                  ) : null}
+                </div>
               ))}
             </div>
 

@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
+import { Footer } from '../components/ui/Footer';
 import { Navbar } from '../components/ui/Navbar';
 import { PageLoader } from '../components/ui/PageLoader';
 
@@ -13,6 +14,7 @@ export function AppShell() {
             <Outlet />
           </Suspense>
         </main>
+        <Footer />
       </div>
     </div>
   );

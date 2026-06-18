@@ -1,9 +1,7 @@
 # Web Travel
 A modern, responsive travel content platform built with React, TypeScript, Vite, Zustand, React Query, and Strapi API integration.
 
-Explore Local Demo
-
-Web Travel Banner
+[Explore Local Demo](https://web-travel-beryl.vercel.app/)
 
 ## Overview
 Web Travel is a frontend assessment project designed to showcase a clean and practical article platform experience. Users can explore travel articles, filter content by category, authenticate into the application, and interact through comments and article management features.
@@ -59,11 +57,11 @@ The project follows a feature-oriented frontend structure.
 src/
 +-- app/                  # App shell and query client setup
 +-- components/           # Shared UI components
-¦   +-- ui/               # Reusable primitives (Button, Card, Input, Select, Modal)
+ï¿½   +-- ui/               # Reusable primitives (Button, Card, Input, Select, Modal)
 +-- features/             # Domain-based logic
-¦   +-- articles/         # Article hooks and Zustand store
-¦   +-- auth/             # Authentication store and session logic
-¦   +-- comments/         # Comment queries and components
+ï¿½   +-- articles/         # Article hooks and Zustand store
+ï¿½   +-- auth/             # Authentication store and session logic
+ï¿½   +-- comments/         # Comment queries and components
 +-- lib/                  # API client, config, schemas, helpers, shared types
 +-- pages/                # Route-level pages
 +-- router/               # Browser router configuration

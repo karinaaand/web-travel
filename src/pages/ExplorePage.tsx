@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
+﻿import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { Compass, Layers3, MapPin, Search } from 'lucide-react';
+import { CalendarDays, Compass, Layers3, MapPin, MessageSquare, Search, UserRound } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Button } from '../components/ui/Button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/Card';
@@ -25,6 +25,15 @@ function pickCover(article: { cover_image_url?: string; cover?: unknown }) {
   if (Array.isArray(cover) && cover[0]?.url) return getMediaUrl(cover[0].url);
   if (cover && typeof cover === 'object' && 'url' in cover && typeof cover.url === 'string') return getMediaUrl(cover.url);
   return '';
+}
+
+function formatPublishDate(value?: string | null) {
+  if (!value) return 'Tanggal belum tersedia';
+  return new Date(value).toLocaleDateString('id-ID', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
 }
 
 type CategoryFormValues = {
@@ -231,7 +240,7 @@ export function ExplorePage() {
               <Card key={index} className="animate-pulse border-white/60 bg-white/72">
                 <div className="aspect-[4/3] bg-white/50" />
                 <div className="flex flex-1 flex-col gap-3 p-5">
-                  <div className="h-5 w-24 rounded-full bg-white/60" />
+                  <div className="h-5 w-36 rounded-full bg-white/60" />
                   <div className="h-4 w-2/3 rounded bg-white/60" />
                   <div className="h-12 w-full rounded bg-white/60" />
                   <div className="mt-auto h-10 w-full rounded-2xl bg-white/60" />
@@ -243,29 +252,41 @@ export function ExplorePage() {
           <>
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
               {articles.map((article) => (
-                <Card key={article.documentId} className="group h-full border-white/70 bg-white/88 shadow-[0_24px_60px_rgba(31,42,46,0.06)] transition duration-200 hover:-translate-y-1.5 hover:shadow-[0_30px_70px_rgba(31,42,46,0.12)]">
-                  <div className="relative aspect-[4/3] overflow-hidden">
+                <Card key={article.documentId} className="group h-full overflow-hidden border-white/70 bg-white/92 shadow-[0_24px_60px_rgba(31,42,46,0.06)] transition duration-200 hover:-translate-y-1.5 hover:shadow-[0_30px_70px_rgba(31,42,46,0.12)]">
+                  <div className="relative aspect-4/3 overflow-hidden">
                     <div
                       className="h-full w-full bg-linear-to-br from-stone-200 to-orange-100 bg-cover bg-center transition duration-500 group-hover:scale-[1.04]"
                       style={pickCover(article) ? { backgroundImage: `url(${pickCover(article)})` } : undefined}
                     />
-                    <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-slate-950/18 via-transparent to-transparent" />
-                  </div>
-                  <CardContent className="flex flex-1 flex-col gap-4 p-5">
-                    <div className="space-y-2">
-                      <span className="inline-flex rounded-full bg-slate-100 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-700">
-                        {article.category?.name ?? 'Travel'}
-                      </span>
-                      <div className="inline-flex items-center gap-1 text-sm text-slate-500">
-                        <MapPin className="h-3.5 w-3.5" />
-                        {article.location ?? 'Destinasi pilihan'}
-                      </div>
+                    <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-slate-950/10 via-transparent to-transparent" />
+                    <div className="absolute right-4 top-4 rounded-2xl bg-white/95 px-4 py-2 text-xs font-semibold text-slate-900 shadow-[0_10px_20px_rgba(15,23,42,0.08)]">
+                      {article.category?.name ?? 'Travel'}
                     </div>
-                    <div className="flex-1 space-y-2">
-                      <h2 className="line-clamp-2 text-lg font-bold leading-tight tracking-tight text-slate-900">{article.title}</h2>
-                      <p className="line-clamp-3 text-sm leading-6 text-slate-600">
+                  </div>
+                  <CardContent className="flex flex-1 flex-col gap-5 p-5 sm:p-6">
+                    <div className="space-y-3">
+                      <h2 className="line-clamp-2 text-2xl font-bold tracking-tight text-slate-950">{article.title}</h2>
+                      <p className="line-clamp-3 text-base leading-8 text-slate-600">
                         {article.description ?? 'Temukan artikel yang menjembatani inspirasi, panduan, dan rencana perjalanan.'}
                       </p>
+                    </div>
+                    <div className="grid gap-3 text-sm text-slate-500 sm:grid-cols-3">
+                      <div className="inline-flex items-center gap-2">
+                        <UserRound className="h-4 w-4" />
+                        <span className="truncate">{article.author?.username ?? 'Unknown Author'}</span>
+                      </div>
+                      <div className="inline-flex items-center gap-2">
+                        <MessageSquare className="h-4 w-4" />
+                        <span>1</span>
+                      </div>
+                      <div className="inline-flex items-center gap-2">
+                        <CalendarDays className="h-4 w-4" />
+                        <span>{formatPublishDate(article.publishedAt)}</span>
+                      </div>
+                    </div>
+                    <div className="inline-flex items-center gap-2 text-sm text-slate-500">
+                      <MapPin className="h-4 w-4" />
+                      <span>{article.location ?? 'Destinasi pilihan'}</span>
                     </div>
                     <Button asChild variant="secondary" className="mt-auto w-full rounded-2xl">
                       <Link to={`/article/${article.documentId}`}>Baca detail</Link>
