@@ -139,8 +139,8 @@ export function ArticleFormModal({ open, onOpenChange, editingArticle, onSuccess
             </div>
 
             <div className="grid gap-3 rounded-3xl border border-slate-200 bg-slate-50/70 p-5 text-sm text-slate-600">
-              <p className="font-semibold text-slate-900">Catatan endpoint saat ini</p>
-              <p>Backend article yang aktif hanya menerima field yang stabil seperti judul, deskripsi, kategori, dan cover. Field konten dan lokasi tetap ditampilkan di UI submission lain, tetapi create/update utama difokuskan ke payload yang kompatibel agar tidak gagal di assessor.</p>
+              <p className="font-semibold text-slate-900">Panduan singkat</p>
+              <p>Lengkapi judul, deskripsi, kategori, dan cover agar artikel tampil rapi dan siap dipublikasikan.</p>
             </div>
 
             <ErrorText message={error || (categoriesQuery.error instanceof Error ? categoriesQuery.error.message : null)} />
@@ -159,3 +159,4 @@ export function ArticleFormModal({ open, onOpenChange, editingArticle, onSuccess
     </Dialog>
   );
 }
+

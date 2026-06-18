@@ -34,7 +34,7 @@ export function Navbar() {
           <div className="flex items-center justify-between gap-3">
             <Link to={token ? '/home' : '/'} className="inline-flex items-center gap-3 text-base font-extrabold tracking-tight text-slate-900 sm:text-lg">
               <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#0f4856_0%,#1b6f78_55%,#f2a65a_100%)] text-sm font-bold text-white shadow-[0_14px_28px_rgba(15,72,86,0.2)]">
-                TA
+                WT
               </span>
               <span className="leading-tight">Web Travel</span>
             </Link>
@@ -93,4 +93,5 @@ export function Navbar() {
     </header>
   );
 }
+
 

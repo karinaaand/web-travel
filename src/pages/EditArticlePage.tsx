@@ -81,13 +81,13 @@ export function EditArticlePage() {
               <div className="space-y-3">
                 <CardTitle className="text-3xl sm:text-[2.3rem]">Perbarui artikel travel</CardTitle>
                 <CardDescription>
-                  Halaman edit sekarang diarahkan ke payload article yang paling kompatibel dengan backend aktif, jadi peluang error saat assessor menguji CRUD lebih kecil.
+                  Perbarui artikel dengan alur yang tetap sederhana, rapi, dan nyaman dipakai.
                 </CardDescription>
               </div>
             </div>
             <div className="rounded-3xl border border-slate-200/80 bg-white/75 p-5">
               <p className="text-sm font-semibold text-slate-900">Tip revisi</p>
-              <p className="mt-2 text-sm leading-7 text-slate-500">Fokuskan update ke judul, deskripsi, kategori, dan cover agar request ke endpoint article tetap lolos dengan shape data yang aman.</p>
+              <p className="mt-2 text-sm leading-7 text-slate-500">Perbarui judul, deskripsi, kategori, atau cover agar tampilan artikel tetap relevan dan menarik.</p>
             </div>
           </CardContent>
         </Card>
@@ -125,8 +125,8 @@ export function EditArticlePage() {
                 </div>
 
                 <div className="grid gap-3 rounded-3xl border border-slate-200 bg-slate-50/70 p-5 text-sm text-slate-600">
-                  <p className="font-semibold text-slate-900">Catatan payload</p>
-                  <p>Backend article saat ini tidak menerima beberapa field tambahan seperti konten dan lokasi pada request update. Karena itu form edit difokuskan ke field yang benar-benar kompatibel agar submission lebih aman.</p>
+                  <p className="font-semibold text-slate-900">Panduan revisi</p>
+                  <p>Gunakan revisi singkat yang tepat agar artikel lebih mudah dipindai dan tetap konsisten dengan tampilan katalog.</p>
                 </div>
 
                 <ErrorText
@@ -149,3 +149,4 @@ export function EditArticlePage() {
     </section>
   );
 }
+

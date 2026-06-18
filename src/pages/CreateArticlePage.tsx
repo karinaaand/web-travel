@@ -72,13 +72,13 @@ export function CreateArticlePage() {
               <div className="space-y-3">
                 <CardTitle className="text-3xl sm:text-[2.3rem]">Tambahkan artikel travel baru</CardTitle>
                 <CardDescription>
-                  Form create article difokuskan ke payload yang benar-benar diterima backend assessor agar alur CRUD tidak gagal saat dinilai.
+                  Susun artikel baru dengan form yang ringkas, jelas, dan nyaman digunakan.
                 </CardDescription>
               </div>
             </div>
             <div className="rounded-3xl border border-slate-200/80 bg-white/75 p-5">
               <p className="text-sm font-semibold text-slate-900">Checklist cepat</p>
-              <p className="mt-2 text-sm leading-7 text-slate-500">Isi judul, deskripsi, kategori, dan cover. Struktur payload ini sudah disesuaikan dengan endpoint article yang aktif di API saat ini.</p>
+              <p className="mt-2 text-sm leading-7 text-slate-500">Isi judul, deskripsi, kategori, dan cover agar artikel tampil utuh di halaman daftar maupun detail.</p>
             </div>
           </CardContent>
         </Card>
@@ -113,8 +113,8 @@ export function CreateArticlePage() {
               </div>
 
               <div className="grid gap-3 rounded-3xl border border-slate-200 bg-slate-50/70 p-5 text-sm text-slate-600">
-                <p className="font-semibold text-slate-900">Catatan assessor mode</p>
-                <p>Untuk menjaga endpoint article tetap lolos runtime, halaman create memakai field yang benar-benar diterima backend aktif. Konten panjang dan lokasi tetap bisa dikembangkan lagi jika API backend mendukung field tersebut.</p>
+                <p className="font-semibold text-slate-900">Panduan singkat</p>
+                <p>Gunakan judul yang jelas, deskripsi yang singkat, dan cover yang relevan agar artikel lebih mudah dipahami pengguna.</p>
               </div>
 
               <ErrorText message={error || (categoriesQuery.error instanceof Error ? categoriesQuery.error.message : null)} />
@@ -130,3 +130,4 @@ export function CreateArticlePage() {
     </section>
   );
 }
+
