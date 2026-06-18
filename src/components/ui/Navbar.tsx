@@ -36,7 +36,7 @@ export function Navbar() {
               <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#0f4856_0%,#1b6f78_55%,#f2a65a_100%)] text-sm font-bold text-white shadow-[0_14px_28px_rgba(15,72,86,0.2)]">
                 TA
               </span>
-              <span className="leading-tight">Travel Article App</span>
+              <span className="leading-tight">Web Travel</span>
             </Link>
           </div>
 
@@ -93,3 +93,4 @@ export function Navbar() {
     </header>
   );
 }
+

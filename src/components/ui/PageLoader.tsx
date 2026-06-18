@@ -6,7 +6,7 @@ export function PageLoader({ label = 'Memuat halaman...' }: { label?: string }) 
           <div className="h-12 w-12 animate-spin rounded-full border-4 border-teal-900/15 border-t-teal-900" aria-hidden="true" />
           <div>
             <p className="inline-flex rounded-full bg-teal-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-teal-900">
-              Travel Article App
+              Web Travel
             </p>
             <p className="mt-3 text-sm leading-6 text-slate-500">{label}</p>
           </div>
@@ -15,3 +15,4 @@ export function PageLoader({ label = 'Memuat halaman...' }: { label?: string }) 
     </section>
   );
 }
+

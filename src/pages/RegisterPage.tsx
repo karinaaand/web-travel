@@ -1,4 +1,4 @@
-﻿import { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link, useNavigate } from 'react-router-dom';
@@ -72,7 +72,7 @@ export function RegisterPage() {
             </div>
             <CardTitle className="text-2xl sm:text-[2rem]">Buat akun baru</CardTitle>
             <CardDescription>
-              Lengkapi data dasar untuk membuat akun dan mulai menggunakan Travel Article App.
+              Lengkapi data dasar untuk membuat akun dan mulai menggunakan Web Travel.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -114,3 +114,4 @@ export function RegisterPage() {
     </section>
   );
 }
+

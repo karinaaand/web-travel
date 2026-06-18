@@ -1,12 +1,12 @@
-# Travel Article App
-A modern, responsive travel article platform built with React, TypeScript, Vite, Zustand, React Query, and Strapi API integration.
+# Web Travel
+A modern, responsive travel content platform built with React, TypeScript, Vite, Zustand, React Query, and Strapi API integration.
 
 Explore Local Demo
 
-Travel Article App Banner
+Web Travel Banner
 
 ## Overview
-Travel Article App is a frontend assessment project designed to showcase a clean and practical article platform experience. Users can explore travel articles, filter content by category, authenticate into the application, and interact through comments and article management features.
+Web Travel is a frontend assessment project designed to showcase a clean and practical article platform experience. Users can explore travel articles, filter content by category, authenticate into the application, and interact through comments and article management features.
 
 The application was built with strong attention to:
 - responsive design for mobile and desktop
@@ -225,8 +225,9 @@ The interface does not rely on pre-made admin templates. Instead, it uses a cust
 - Honest handling of backend limitations without hiding technical constraints
 
 ## Final Summary
-Travel Article App is a practical and polished frontend assessment submission built to balance clean architecture, attractive UI, and real-world API constraints. It aims to demonstrate not only implementation skill, but also the judgment needed to keep a product usable and presentable even when the backend is imperfect.
+Web Travel is a practical and polished frontend assessment submission built to balance clean architecture, attractive UI, and real-world API constraints. It aims to demonstrate not only implementation skill, but also the judgment needed to keep a product usable and presentable even when the backend is imperfect.
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
+
 
