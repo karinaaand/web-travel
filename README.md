@@ -173,7 +173,8 @@ Open the local Vite URL shown in the terminal to view the application.
 - Because the API is a shared dummy backend, runtime behavior can vary depending on concurrent usage by other candidates.
 - Some direct `GET by documentId` endpoints may return `403` from the backend instance.
 - Article mutation payloads were adjusted to match the currently accepted backend shape rather than an idealized content schema.
-- Full Playwright cross-browser execution depends on the required browser binaries being installed locally.
+- Playwright configuration is currently focused on Chromium for stable local verification and submission readiness.
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
+
