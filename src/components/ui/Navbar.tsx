@@ -48,8 +48,8 @@ export function Navbar() {
                 <NavLink to="/explore" className={navClass}>Explore</NavLink>
                 <NavLink to="/login" className={navClass}>Login</NavLink>
               </nav>
-              <Button asChild className="rounded-full px-5 !text-white hover:!text-white">
-                <Link to="/register" className="!text-white hover:!text-white">Register</Link>
+              <Button asChild className="rounded-full px-5 text-white! hover:text-white!">
+                <Link to="/register" className="text-white! hover:text-white!">Register</Link>
               </Button>
             </div>
           ) : (

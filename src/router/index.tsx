@@ -1,6 +1,7 @@
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { AppShell } from '../app/AppShell';
+import { ProtectedRoute } from '../components/ProtectedRoute';
 
 const LandingPage = lazy(() => import('../pages/LandingPage').then((module) => ({ default: module.LandingPage })));
 const LoginPage = lazy(() => import('../pages/LoginPage').then((module) => ({ default: module.LoginPage })));
@@ -20,8 +21,22 @@ export const router = createBrowserRouter([
       { path: 'home', element: <ArticlesPage /> },
       { path: 'explore', element: <ExplorePage /> },
       { path: 'article/:documentId', element: <ArticleDetailPage /> },
-      { path: 'create', element: <CreateArticlePage /> },
-      { path: 'edit/:documentId', element: <EditArticlePage /> },
+      {
+        path: 'create',
+        element: (
+          <ProtectedRoute>
+            <CreateArticlePage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'edit/:documentId',
+        element: (
+          <ProtectedRoute>
+            <EditArticlePage />
+          </ProtectedRoute>
+        ),
+      },
       { path: 'login', element: <LoginPage /> },
       { path: 'register', element: <RegisterPage /> },
     ],

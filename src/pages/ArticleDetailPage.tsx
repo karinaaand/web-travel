@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../co
 import { ErrorText } from '../components/ui/ErrorText';
 import { CommentsSection } from '../features/comments/components/CommentsSection';
 import { useArticleQuery } from '../features/articles/store/articleQueries';
+import { useAuthStore } from '../features/auth/store/authStore';
 import { getMediaUrl } from '../lib/strapi';
 
 function pickCover(article: { cover_image_url?: string; cover?: unknown }) {
@@ -20,8 +21,11 @@ export function ArticleDetailPage() {
   const { documentId } = useParams();
   const articleQuery = useArticleQuery(documentId);
   const selectedArticle = articleQuery.data;
+  const { token, user } = useAuthStore();
 
   const cover = selectedArticle ? pickCover(selectedArticle) : '';
+  const canEditArticle = Boolean(token && user && selectedArticle?.author?.id === user.id);
+
   const contentBlocks = useMemo(() => {
     if (!selectedArticle?.content) return [];
     return selectedArticle.content.split(/\n{2,}/).filter(Boolean);
@@ -88,12 +92,14 @@ export function ArticleDetailPage() {
                       <Share2 className="h-4 w-4" />
                       Bagikan artikel
                     </Button>
-                    <Button asChild variant="outline" className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/20 hover:text-white">
-                      <Link to={`/edit/${selectedArticle.documentId}`}>
-                        <SquarePen className="h-4 w-4" />
-                        Edit artikel
-                      </Link>
-                    </Button>
+                    {canEditArticle ? (
+                      <Button asChild variant="outline" className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/20 hover:text-white">
+                        <Link to={`/edit/${selectedArticle.documentId}`}>
+                          <SquarePen className="h-4 w-4" />
+                          Edit artikel
+                        </Link>
+                      </Button>
+                    ) : null}
                   </div>
                 </div>
               </div>

@@ -16,7 +16,7 @@ import { useAuthStore } from '../features/auth/store/authStore';
 export function ArticlesPage() {
   const { page, pageSize, search, categoryId, sort, setSearch, setCategoryId } = useArticleStore();
   const { deleteArticle, saving } = useArticleStore();
-  const { token } = useAuthStore();
+  const { token, user } = useAuthStore();
   const [tempSearch, setTempSearch] = useState(search);
   const [tempCategoryId, setTempCategoryId] = useState(categoryId);
   const [createModalOpen, setCreateModalOpen] = useState(false);
@@ -64,6 +64,8 @@ export function ArticlesPage() {
     setDeletingArticleId(articleId);
     setDeleteModalOpen(true);
   };
+
+  const canManageArticle = (article: typeof articles[number]) => Boolean(token && user && article.author?.id === user.id);
 
   const handleDeleteConfirm = async () => {
     if (!deletingArticleId) return false;
@@ -160,7 +162,7 @@ export function ArticlesPage() {
               {articles.map((article) => (
                 <div key={article.documentId} className="flex h-full flex-col gap-3 rounded-[28px] border border-white/60 bg-white/45 p-2 shadow-[0_18px_45px_rgba(31,42,46,0.06)]">
                   <ArticlePreviewCard article={article} actionLabel="Baca detail" />
-                  {token ? (
+                  {canManageArticle(article) ? (
                     <div className="grid grid-cols-2 gap-2 px-2 pb-2">
                       <Button variant="outline" size="sm" onClick={() => handleEditClick(article)} className="rounded-2xl border-teal-200 text-teal-700 hover:bg-teal-50">
                         <Edit2 className="h-3.5 w-3.5" />
