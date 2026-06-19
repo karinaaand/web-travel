@@ -37,15 +37,15 @@ export function ArticlePreviewCard({ article, actionLabel }: { article: Article;
         </div>
       </div>
 
-      <CardContent className="flex h-full flex-1 flex-col p-5 sm:p-6">
-        <div className="flex min-h-[8.5rem] flex-col gap-2">
-          <h2 className="line-clamp-2 min-h-[3.5rem] text-xl font-bold tracking-tight text-slate-950">{article.title}</h2>
-          <p className="line-clamp-3 min-h-[5.25rem] text-base leading-7 text-slate-600">
+      <CardContent className="flex h-full flex-1 flex-col p-4 sm:p-6">
+        <div className="flex min-h-[7.75rem] flex-col gap-2 sm:min-h-[8.5rem]">
+          <h2 className="line-clamp-2 min-h-[3.25rem] text-lg font-bold tracking-tight text-slate-950 sm:min-h-[3.5rem] sm:text-xl">{article.title}</h2>
+          <p className="line-clamp-3 min-h-[4.75rem] text-sm leading-6 text-slate-600 sm:min-h-[5.25rem] sm:text-base sm:leading-7">
             {article.description ?? 'Cerita perjalanan yang membantu pembaca menangkap suasana destinasi sebelum benar-benar datang.'}
           </p>
         </div>
 
-        <div className="mt-5 grid min-h-[4.75rem] gap-3 border-t border-slate-100 pt-4 text-sm text-slate-500 sm:grid-cols-[minmax(0,1.2fr)_auto] sm:items-start">
+        <div className="mt-4 grid min-h-[4.75rem] gap-3 border-t border-slate-100 pt-4 text-sm text-slate-500 sm:mt-5 sm:grid-cols-[minmax(0,1.2fr)_auto] sm:items-start">
           <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
             <div className="inline-flex min-w-0 items-center gap-2">
               <UserRound className="h-4 w-4 shrink-0" />
@@ -62,7 +62,7 @@ export function ArticlePreviewCard({ article, actionLabel }: { article: Article;
           </div>
         </div>
 
-        <Button asChild variant="secondary" className="mt-5 w-full rounded-2xl">
+        <Button asChild variant="secondary" className="mt-4 w-full rounded-2xl sm:mt-5">
           <Link to={`/article/${article.documentId}`}>{actionLabel}</Link>
         </Button>
       </CardContent>

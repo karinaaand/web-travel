@@ -111,7 +111,7 @@ export function ExplorePage() {
     <section className="page">
       <div className="container flex flex-col gap-7 sm:gap-8">
         <Card variant="warm" className="border-white/70 bg-white/88">
-          <CardContent className="gap-8 p-6 sm:p-8 lg:p-10">
+          <CardContent className="gap-8 p-5 sm:p-8 lg:p-10">
             <div className="space-y-4">
               <div className="inline-flex w-fit items-center gap-2 rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-orange-900">
                 <Compass className="h-3.5 w-3.5" />
@@ -169,7 +169,7 @@ export function ExplorePage() {
               <Button
                 type="button"
                 variant="outline"
-                className="rounded-2xl"
+                className="w-full rounded-2xl sm:w-auto"
                 onClick={() => void resetCategoryDraft()}
                 disabled={
                   createCategoryMutation.isPending ||
@@ -192,7 +192,7 @@ export function ExplorePage() {
               <>
                 <form className="grid gap-4 lg:grid-cols-[1fr_auto]" onSubmit={categoryForm.handleSubmit(handleCreateCategory)}>
                   <Input label="Nama kategori baru" {...categoryForm.register('name')} placeholder="Contoh: Adventure" />
-                  <Button type="submit" className="rounded-2xl lg:self-end" disabled={createCategoryMutation.isPending}>
+                  <Button type="submit" className="w-full rounded-2xl lg:w-auto lg:self-end" disabled={createCategoryMutation.isPending}>
                     {createCategoryMutation.isPending ? 'Membuat...' : 'Buat kategori'}
                   </Button>
                 </form>
@@ -206,7 +206,7 @@ export function ExplorePage() {
                       </option>
                     ))}
                   </Select>
-                  <Button type="button" variant="secondary" className="rounded-2xl" onClick={() => tempCategoryId && setCategoryId(tempCategoryId)} disabled={!tempCategoryId}>
+                  <Button type="button" variant="secondary" className="w-full rounded-2xl md:w-auto" onClick={() => tempCategoryId && setCategoryId(tempCategoryId)} disabled={!tempCategoryId}>
                     Gunakan kategori ini
                   </Button>
                 </div>
@@ -225,13 +225,13 @@ export function ExplorePage() {
                       placeholder={categoryDetail?.name ?? selectedCategory.name}
                     />
                     <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                      <Button type="button" variant="secondary" className="rounded-2xl" onClick={() => categoryForm.reset({ name: categoryDetail?.name ?? selectedCategory.name })} disabled={categoryDetailQuery.isLoading}>
+                      <Button type="button" variant="secondary" className="w-full rounded-2xl" onClick={() => categoryForm.reset({ name: categoryDetail?.name ?? selectedCategory.name })} disabled={categoryDetailQuery.isLoading}>
                         {categoryDetailQuery.isLoading ? 'Memuat detail...' : 'Ambil kategori'}
                       </Button>
-                      <Button type="button" className="rounded-2xl" onClick={() => void handleUpdateCategory()} disabled={updateCategoryMutation.isPending}>
+                      <Button type="button" className="w-full rounded-2xl" onClick={() => void handleUpdateCategory()} disabled={updateCategoryMutation.isPending}>
                         {updateCategoryMutation.isPending ? 'Memperbarui...' : 'Perbarui kategori'}
                       </Button>
-                      <Button type="button" variant="destructive" className="rounded-2xl sm:col-span-2 xl:col-span-1" onClick={() => void handleDeleteCategory()} disabled={deleteCategoryMutation.isPending}>
+                      <Button type="button" variant="destructive" className="w-full rounded-2xl sm:col-span-2 xl:col-span-1" onClick={() => void handleDeleteCategory()} disabled={deleteCategoryMutation.isPending}>
                         {deleteCategoryMutation.isPending ? 'Menghapus...' : 'Hapus kategori'}
                       </Button>
                     </div>

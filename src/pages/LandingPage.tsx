@@ -51,36 +51,36 @@ export function LandingPage() {
 
   return (
     <section className="page">
-      <div className="container flex flex-col gap-8 sm:gap-10">
+      <div className="container flex flex-col gap-7 sm:gap-10">
         <Card className="border-white/60 bg-white/86">
           <div
-            className="flex min-h-[540px] items-end bg-[linear-gradient(135deg,#0d3b46_0%,#1f6f78_52%,#f4a261_100%)] bg-cover bg-center p-6 transition-all duration-700 ease-in-out sm:p-8 lg:p-10"
+            className="flex min-h-[460px] items-end bg-[linear-gradient(135deg,#0d3b46_0%,#1f6f78_52%,#f4a261_100%)] bg-cover bg-center p-4 transition-all duration-700 ease-in-out sm:min-h-[540px] sm:p-8 lg:p-10"
             style={featuredCover ? { backgroundImage: `linear-gradient(180deg, rgba(7, 24, 29, 0.24), rgba(7, 24, 29, 0.84)), url(${featuredCover})` } : undefined}
           >
-            <div className="grid w-full gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
-              <div className="max-w-4xl space-y-6 text-white">
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-white/90">
+            <div className="grid w-full gap-6 sm:gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+              <div className="max-w-4xl space-y-5 text-white sm:space-y-6">
+                <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/90 sm:text-xs sm:tracking-[0.2em]">
                   <Sparkles className="h-3.5 w-3.5" />
                   Cerita perjalanan, panduan, dan penemuan
                 </div>
                 <div className="space-y-4">
-                  <h1 className="max-w-4xl text-4xl font-semibold tracking-tight transition-all duration-500 sm:text-5xl lg:text-6xl lg:leading-[1.02]">
+                  <h1 className="max-w-4xl text-3xl font-semibold tracking-tight transition-all duration-500 sm:text-5xl lg:text-6xl lg:leading-[1.02]">
                     {featured?.title || 'Tampilan travel blog yang terasa premium, hangat, dan tetap mudah dipakai.'}
                   </h1>
-                  <p className="max-w-3xl text-sm leading-7 text-white/85 transition-all duration-500 sm:text-base">
+                  <p className="max-w-3xl text-sm leading-6 text-white/85 transition-all duration-500 sm:text-base sm:leading-7">
                     {featured?.description || 'Dari inspirasi destinasi sampai cerita lokal yang detail, semua artikel disusun dalam pengalaman baca yang lebih modern, rapi, dan nyaman untuk dilihat di layar kecil maupun besar.'}
                   </p>
                 </div>
                 <div className="flex flex-col gap-3 sm:flex-row">
-                  <Button asChild size="lg" className="rounded-2xl px-6">
+                  <Button asChild size="lg" className="w-full rounded-2xl px-6 sm:w-auto">
                     <Link to="/home">Mulai eksplorasi</Link>
                   </Button>
-                  <Button asChild variant="outline" size="lg" className="rounded-2xl border-white/20 bg-white/10 px-6 text-white hover:bg-white/20 hover:text-white">
+                  <Button asChild variant="outline" size="lg" className="w-full rounded-2xl border-white/20 bg-white/10 px-6 text-white hover:bg-white/20 hover:text-white sm:w-auto">
                     <Link to="/explore">Lihat kategori</Link>
                   </Button>
                 </div>
                 {articles.length > 0 ? (
-                  <div className="flex gap-2 pt-2">
+                  <div className="flex flex-wrap gap-2 pt-1 sm:pt-2">
                     {articles.map((_, idx) => (
                       <button
                         key={idx}
@@ -93,11 +93,11 @@ export function LandingPage() {
                 ) : null}
               </div>
 
-              <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+              <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
                 {stats.map((item) => (
-                  <div key={item.label} className="rounded-3xl border border-white/15 bg-white/10 p-5 backdrop-blur-sm">
-                    <p className="text-xs uppercase tracking-[0.18em] text-white/70">{item.label}</p>
-                    <p className="mt-2 text-3xl font-semibold text-white">{item.value}</p>
+                  <div key={item.label} className="rounded-3xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm sm:p-5">
+                    <p className="text-[11px] uppercase tracking-[0.16em] text-white/70 sm:text-xs sm:tracking-[0.18em]">{item.label}</p>
+                    <p className="mt-2 text-2xl font-semibold text-white sm:text-3xl">{item.value}</p>
                   </div>
                 ))}
               </div>
@@ -105,7 +105,7 @@ export function LandingPage() {
           </div>
         </Card>
 
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid gap-5 lg:grid-cols-3">
           {highlights.map((article) => (
             <ArticlePreviewCard key={article.documentId} article={article} actionLabel="Baca artikel" />
           ))}

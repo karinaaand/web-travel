@@ -1,4 +1,4 @@
-﻿import { Camera, Mail, Send } from 'lucide-react';
+import { Camera, Mail, Send } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const quickLinks = [
@@ -24,7 +24,7 @@ export function Footer() {
   return (
     <footer className="relative z-10 mt-10 border-t border-slate-800/40 bg-[#030b1c] text-slate-200">
       <div className="container py-12 sm:py-14 lg:py-16">
-        <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr_0.8fr_1fr]">
+        <div className="grid gap-8 sm:gap-10 lg:grid-cols-[1.2fr_0.8fr_0.8fr_1fr]">
           <div className="space-y-5">
             <div className="inline-flex items-center gap-3 text-lg font-extrabold tracking-tight text-white">
               <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#0f4856_0%,#1b6f78_55%,#f2a65a_100%)] text-sm font-bold text-white shadow-[0_14px_28px_rgba(15,72,86,0.25)]">
@@ -67,9 +67,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-5 border-t border-slate-800/60 pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-slate-400">Copyright 2026 Web Travel. All rights reserved.</p>
-          <div className="flex items-center gap-4 text-slate-400">
+        <div className="mt-10 flex flex-col gap-5 border-t border-slate-800/60 pt-6 sm:mt-12 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm leading-6 text-slate-400">Copyright 2026 Web Travel. All rights reserved.</p>
+          <div className="flex flex-wrap items-center gap-4 text-slate-400">
             {socials.map((item) => {
               const Icon = item.icon;
               return (

@@ -98,7 +98,7 @@ export function ArticlesPage() {
     <section className="page">
       <div className="container flex flex-col gap-7 sm:gap-8">
         <Card variant="soft" className="border-white/70 bg-white/88">
-          <CardContent className="gap-8 p-6 sm:p-8 lg:p-10">
+          <CardContent className="gap-8 p-5 sm:p-8 lg:p-10">
             <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
               <div className="space-y-4">
                 <div className="inline-flex w-fit items-center gap-2 rounded-full bg-teal-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-teal-900">
@@ -158,7 +158,7 @@ export function ArticlesPage() {
           </div>
         ) : (
           <>
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
               {articles.map((article) => (
                 <div key={article.documentId} className="flex h-full flex-col gap-3 rounded-[28px] border border-white/60 bg-white/45 p-2 shadow-[0_18px_45px_rgba(31,42,46,0.06)]">
                   <ArticlePreviewCard article={article} actionLabel="Baca detail" />
@@ -190,18 +190,18 @@ export function ArticlesPage() {
         )}
 
         <Card className="border-white/70 bg-white/92">
-          <CardContent className="flex flex-col gap-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:py-7">
+          <CardContent className="flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:justify-between sm:py-7">
             <p className="text-sm font-medium text-slate-700">
               Menampilkan {total ? Math.max(1, (currentPage - 1) * pageSize + 1) : 0} sampai {Math.min(total, currentPage * pageSize)} dari {total} artikel
             </p>
-            <div className="flex flex-wrap items-center gap-3">
-              <Button variant="secondary" disabled={currentPage <= 1 || articlesQuery.isFetching} onClick={() => useArticleStore.setState({ page: currentPage - 1 })} className="rounded-2xl">
+            <div className="grid w-full grid-cols-[1fr_auto_1fr] items-center gap-2 sm:flex sm:w-auto sm:flex-wrap sm:gap-3">
+              <Button variant="secondary" disabled={currentPage <= 1 || articlesQuery.isFetching} onClick={() => useArticleStore.setState({ page: currentPage - 1 })} className="rounded-2xl px-3 sm:px-4">
                 Previous
               </Button>
-              <div className="rounded-full bg-teal-700 px-5 py-3 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(15,72,86,0.16)]">
+              <div className="rounded-full bg-teal-700 px-4 py-3 text-center text-sm font-semibold text-white shadow-[0_10px_24px_rgba(15,72,86,0.16)] sm:px-5">
                 {currentPage}/{pageCount}
               </div>
-              <Button variant="secondary" disabled={currentPage >= pageCount || articlesQuery.isFetching} onClick={() => useArticleStore.setState({ page: currentPage + 1 })} className="rounded-2xl">
+              <Button variant="secondary" disabled={currentPage >= pageCount || articlesQuery.isFetching} onClick={() => useArticleStore.setState({ page: currentPage + 1 })} className="rounded-2xl px-3 sm:px-4">
                 Next
               </Button>
             </div>
