@@ -7,14 +7,14 @@ interface DeleteConfirmModalProps {
   onOpenChange: (open: boolean) => void;
   title: string;
   description?: string;
-  onConfirm: () => Promise<void>;
+  onConfirm: () => Promise<boolean>;
   isLoading?: boolean;
 }
 
 export function DeleteConfirmModal({ open, onOpenChange, title, description, onConfirm, isLoading = false }: DeleteConfirmModalProps) {
   const handleConfirm = async () => {
-    await onConfirm();
-    onOpenChange(false);
+    const ok = await onConfirm();
+    if (ok) onOpenChange(false);
   };
 
   return (

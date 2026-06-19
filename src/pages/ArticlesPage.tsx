@@ -66,9 +66,25 @@ export function ArticlesPage() {
   };
 
   const handleDeleteConfirm = async () => {
-    if (!deletingArticleId) return;
+    if (!deletingArticleId) return false;
+
     const ok = await deleteArticle(deletingArticleId);
     if (ok) setDeletingArticleId(null);
+    return ok;
+  };
+
+  const handleCreateModalChange = (open: boolean) => {
+    setCreateModalOpen(open);
+  };
+
+  const handleEditModalChange = (open: boolean) => {
+    setEditModalOpen(open);
+    if (!open) setEditingArticle(null);
+  };
+
+  const handleDeleteModalChange = (open: boolean) => {
+    setDeleteModalOpen(open);
+    if (!open) setDeletingArticleId(null);
   };
 
   const handleModalSuccess = () => {
@@ -142,15 +158,15 @@ export function ArticlesPage() {
           <>
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
               {articles.map((article) => (
-                <div key={article.documentId} className="flex flex-col gap-2">
+                <div key={article.documentId} className="flex h-full flex-col gap-3 rounded-[28px] border border-white/60 bg-white/45 p-2 shadow-[0_18px_45px_rgba(31,42,46,0.06)]">
                   <ArticlePreviewCard article={article} actionLabel="Baca detail" />
                   {token ? (
-                    <div className="grid grid-cols-2 gap-2">
-                      <Button variant="outline" size="sm" onClick={() => handleEditClick(article)} className="rounded-2xl text-teal-700 hover:bg-teal-50">
+                    <div className="grid grid-cols-2 gap-2 px-2 pb-2">
+                      <Button variant="outline" size="sm" onClick={() => handleEditClick(article)} className="rounded-2xl border-teal-200 text-teal-700 hover:bg-teal-50">
                         <Edit2 className="h-3.5 w-3.5" />
                         Edit
                       </Button>
-                      <Button variant="outline" size="sm" onClick={() => handleDeleteClick(article.documentId)} className="rounded-2xl text-rose-600 hover:bg-rose-50">
+                      <Button variant="outline" size="sm" onClick={() => handleDeleteClick(article.documentId)} className="rounded-2xl border-rose-200 text-rose-600 hover:bg-rose-50">
                         <Trash2 className="h-3.5 w-3.5" />
                         Hapus
                       </Button>
@@ -191,9 +207,9 @@ export function ArticlesPage() {
         </Card>
       </div>
 
-      <ArticleFormModal open={createModalOpen} onOpenChange={setCreateModalOpen} onSuccess={handleModalSuccess} />
-      <ArticleFormModal open={editModalOpen} onOpenChange={setEditModalOpen} editingArticle={editingArticle} onSuccess={handleModalSuccess} />
-      <DeleteConfirmModal open={deleteModalOpen} onOpenChange={setDeleteModalOpen} title="Hapus artikel ini?" description={`Artikel "${articles.find((a) => a.documentId === deletingArticleId)?.title}" akan dihapus secara permanen.`} onConfirm={handleDeleteConfirm} isLoading={saving} />
+      <ArticleFormModal open={createModalOpen} onOpenChange={handleCreateModalChange} onSuccess={handleModalSuccess} />
+      <ArticleFormModal open={editModalOpen} onOpenChange={handleEditModalChange} editingArticle={editingArticle} onSuccess={handleModalSuccess} />
+      <DeleteConfirmModal open={deleteModalOpen} onOpenChange={handleDeleteModalChange} title="Hapus artikel ini?" description={`Artikel "${articles.find((a) => a.documentId === deletingArticleId)?.title}" akan dihapus secara permanen.`} onConfirm={handleDeleteConfirm} isLoading={saving} />
     </section>
   );
 }

@@ -1,4 +1,4 @@
-﻿import { CalendarDays, MapPin, MessageSquare, UserRound } from 'lucide-react';
+import { CalendarDays, MessageSquare, UserRound } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from './Button';
 import { Card, CardContent } from './Card';
@@ -45,24 +45,21 @@ export function ArticlePreviewCard({ article, actionLabel }: { article: Article;
           </p>
         </div>
 
-        <div className="mt-auto grid gap-3 border-t border-slate-100 pt-4 text-sm text-slate-500 sm:grid-cols-[1.2fr_0.7fr_1fr]">
-          <div className="inline-flex min-w-0 items-center gap-2">
-            <UserRound className="h-4 w-4 shrink-0" />
-            <span className="truncate">{article.author?.username ?? 'Unknown Author'}</span>
+        <div className="mt-auto grid gap-3 border-t border-slate-100 pt-4 text-sm text-slate-500 sm:grid-cols-[minmax(0,1.2fr)_auto] sm:items-start">
+          <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
+            <div className="inline-flex min-w-0 items-center gap-2">
+              <UserRound className="h-4 w-4 shrink-0" />
+              <span className="truncate">{article.author?.username ?? 'Unknown Author'}</span>
+            </div>
+            <div className="inline-flex items-center gap-2">
+              <MessageSquare className="h-4 w-4 shrink-0" />
+              <span>{getCommentCount(article)}</span>
+            </div>
           </div>
-          <div className="inline-flex items-center gap-2">
-            <MessageSquare className="h-4 w-4 shrink-0" />
-            <span>{getCommentCount(article)}</span>
+          <div className="inline-flex w-fit items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-[11px] font-medium text-slate-600 sm:justify-self-end">
+            <CalendarDays className="h-3.5 w-3.5 shrink-0" />
+            <span className="whitespace-nowrap">{formatPublishDate(article.publishedAt)}</span>
           </div>
-          <div className="inline-flex items-center gap-2 justify-self-start sm:justify-self-end">
-            <CalendarDays className="h-4 w-4 shrink-0" />
-            <span>{formatPublishDate(article.publishedAt)}</span>
-          </div>
-        </div>
-
-        <div className="inline-flex min-w-0 items-center gap-2 text-sm text-slate-500">
-          <MapPin className="h-4 w-4 shrink-0" />
-          <span className="truncate">{article.location ?? 'Destinasi pilihan'}</span>
         </div>
 
         <Button asChild variant="secondary" className="w-full rounded-2xl">

@@ -40,6 +40,7 @@ export function ArticleFormModal({ open, onOpenChange, editingArticle, onSuccess
   const { saving, error, createArticle, updateArticle, uploadCover } = useArticleStore();
   const categoriesQuery = useCategoriesQuery();
   const [uploadName, setUploadName] = useState('');
+  const [uploadError, setUploadError] = useState<string | null>(null);
 
   const form = useForm<ArticleValues>({
     resolver: zodResolver(articleSchema),
@@ -47,6 +48,8 @@ export function ArticleFormModal({ open, onOpenChange, editingArticle, onSuccess
   });
 
   useEffect(() => {
+    if (!open) return;
+
     if (editingArticle) {
       form.reset({
         title: editingArticle.title ?? '',
@@ -56,18 +59,44 @@ export function ArticleFormModal({ open, onOpenChange, editingArticle, onSuccess
         category: editingArticle.category ? String(editingArticle.category.id) : '',
         cover: '',
       });
-      setUploadName('');
     } else {
       form.reset(defaultValues);
-      setUploadName('');
     }
-  }, [editingArticle, open, form]);
+
+    setUploadName('');
+    setUploadError(null);
+  }, [editingArticle, form, open]);
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (!nextOpen) {
+      form.reset(defaultValues);
+      setUploadName('');
+      setUploadError(null);
+    }
+
+    onOpenChange(nextOpen);
+  };
 
   const handleUpload = async (file: File | null) => {
-    if (!file) return;
+    if (!file) {
+      setUploadName('');
+      setUploadError(null);
+      form.setValue('cover', '');
+      return;
+    }
+
     setUploadName(file.name);
+    setUploadError(null);
+
     const fileId = await uploadCover(file);
-    if (fileId) form.setValue('cover', String(fileId));
+
+    if (fileId) {
+      form.setValue('cover', String(fileId), { shouldValidate: true });
+      return;
+    }
+
+    setUploadError('Upload cover gagal. Coba pilih file lagi.');
+    form.setValue('cover', '');
   };
 
   const onSubmit = async (values: ArticleValues) => {
@@ -78,15 +107,12 @@ export function ArticleFormModal({ open, onOpenChange, editingArticle, onSuccess
       ...(values.cover ? { cover: Number(values.cover) } : {}),
     };
 
-    let ok = false;
-    if (editingArticle) {
-      ok = await updateArticle(editingArticle.documentId, payload);
-    } else {
-      ok = await createArticle(payload);
-    }
+    const ok = editingArticle
+      ? await updateArticle(editingArticle.documentId, payload)
+      : await createArticle(payload);
 
     if (ok) {
-      onOpenChange(false);
+      handleOpenChange(false);
       onSuccess?.();
     }
   };
@@ -94,7 +120,7 @@ export function ArticleFormModal({ open, onOpenChange, editingArticle, onSuccess
   const isLoading = editingArticle && !editingArticle.title;
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{editingArticle ? 'Perbarui artikel' : 'Buat artikel baru'}</DialogTitle>
@@ -143,10 +169,10 @@ export function ArticleFormModal({ open, onOpenChange, editingArticle, onSuccess
               <p>Lengkapi judul, deskripsi, kategori, dan cover agar artikel tampil rapi dan siap dipublikasikan.</p>
             </div>
 
-            <ErrorText message={error || (categoriesQuery.error instanceof Error ? categoriesQuery.error.message : null)} />
+            <ErrorText message={uploadError || error || (categoriesQuery.error instanceof Error ? categoriesQuery.error.message : null)} />
 
             <DialogFooter className="gap-3 pt-4 sm:gap-3">
-              <Button variant="outline" type="button" onClick={() => onOpenChange(false)} className="rounded-2xl" disabled={saving}>
+              <Button variant="outline" type="button" onClick={() => handleOpenChange(false)} className="rounded-2xl" disabled={saving}>
                 Batal
               </Button>
               <Button type="submit" disabled={saving} className="rounded-2xl">
@@ -159,4 +185,3 @@ export function ArticleFormModal({ open, onOpenChange, editingArticle, onSuccess
     </Dialog>
   );
 }
-

@@ -1,6 +1,6 @@
-﻿import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { CalendarDays, Compass, Layers3, MapPin, MessageSquare, Search, UserRound } from 'lucide-react';
+import { CalendarDays, Compass, Layers3, MessageSquare, Search, UserRound, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Button } from '../components/ui/Button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/Card';
@@ -67,6 +67,21 @@ export function ExplorePage() {
 
   const categoryDetail = categoryDetailQuery.data;
 
+  const refreshCategoryPage = async () => {
+    await Promise.all([
+      categoriesQuery.refetch(),
+      articlesQuery.refetch(),
+      categoryDetailQuery.refetch(),
+    ]);
+  };
+
+  const resetCategoryDraft = async () => {
+    categoryForm.reset({ name: '' });
+    setTempCategoryId('');
+    setCategoryId('');
+    await refreshCategoryPage();
+  };
+
   const handleCreateCategory = async (values: CategoryFormValues) => {
     if (!values.name.trim()) return;
     const created = await createCategoryMutation.mutateAsync(values.name);
@@ -75,6 +90,7 @@ export function ExplorePage() {
       setTempCategoryId(nextId);
       setCategoryId(nextId);
       categoryForm.reset({ name: created.name });
+      await refreshCategoryPage();
     } else {
       categoryForm.reset({ name: '' });
     }
@@ -92,15 +108,14 @@ export function ExplorePage() {
       setTempCategoryId(nextId);
       setCategoryId(nextId);
       categoryForm.reset({ name: updated.name });
+      await refreshCategoryPage();
     }
   };
 
   const handleDeleteCategory = async () => {
     if (!selectedCategory?.documentId) return;
     await deleteCategoryMutation.mutateAsync(selectedCategory.documentId);
-    setTempCategoryId('');
-    setCategoryId('');
-    categoryForm.reset({ name: '' });
+    await resetCategoryDraft();
   };
 
   const handleApplyFilter = () => {
@@ -155,14 +170,35 @@ export function ExplorePage() {
 
         <Card className="border-white/70 bg-white/88">
           <CardHeader className="space-y-3">
-            <div className="inline-flex w-fit items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-slate-700">
-              <Layers3 className="h-3.5 w-3.5" />
-              Manajemen Kategori
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="space-y-3">
+                <div className="inline-flex w-fit items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-slate-700">
+                  <Layers3 className="h-3.5 w-3.5" />
+                  Manajemen Kategori
+                </div>
+                <div>
+                  <CardTitle className="text-2xl">Kelola kategori eksplorasi</CardTitle>
+                  <CardDescription className="mt-2 text-sm leading-7">
+                    Panel kategori sekarang dibuat lebih bersih supaya aksi create, get, update, dan delete tidak terasa numpuk.
+                  </CardDescription>
+                </div>
+              </div>
+              <Button
+                type="button"
+                variant="outline"
+                className="rounded-2xl"
+                onClick={() => void resetCategoryDraft()}
+                disabled={
+                  createCategoryMutation.isPending ||
+                  updateCategoryMutation.isPending ||
+                  deleteCategoryMutation.isPending ||
+                  (!tempCategoryId && !categoryForm.watch('name').trim())
+                }
+              >
+                <X className="h-4 w-4" />
+                Batal aksi
+              </Button>
             </div>
-            <CardTitle className="text-2xl">Kelola kategori eksplorasi</CardTitle>
-            <CardDescription className="text-sm leading-7">
-              Panel kategori sekarang dibuat lebih bersih supaya aksi create, get, update, dan delete tidak terasa numpuk.
-            </CardDescription>
           </CardHeader>
           <CardContent className="gap-5">
             {!token ? (
@@ -270,23 +306,21 @@ export function ExplorePage() {
                         {article.description ?? 'Temukan artikel yang menjembatani inspirasi, panduan, dan rencana perjalanan.'}
                       </p>
                     </div>
-                    <div className="grid gap-3 text-sm text-slate-500 sm:grid-cols-3">
-                      <div className="inline-flex items-center gap-2">
-                        <UserRound className="h-4 w-4" />
-                        <span className="truncate">{article.author?.username ?? 'Unknown Author'}</span>
+                    <div className="mt-auto grid gap-3 border-t border-slate-100 pt-4 text-sm text-slate-500 sm:grid-cols-[minmax(0,1.2fr)_auto] sm:items-start">
+                      <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
+                        <div className="inline-flex min-w-0 items-center gap-2">
+                          <UserRound className="h-4 w-4 shrink-0" />
+                          <span className="truncate">{article.author?.username ?? 'Unknown Author'}</span>
+                        </div>
+                        <div className="inline-flex items-center gap-2">
+                          <MessageSquare className="h-4 w-4 shrink-0" />
+                          <span>{article.comments?.length ?? 0}</span>
+                        </div>
                       </div>
-                      <div className="inline-flex items-center gap-2">
-                        <MessageSquare className="h-4 w-4" />
-                        <span>1</span>
+                      <div className="inline-flex w-fit items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-[11px] font-medium text-slate-600 sm:justify-self-end">
+                        <CalendarDays className="h-3.5 w-3.5 shrink-0" />
+                        <span className="whitespace-nowrap">{formatPublishDate(article.publishedAt)}</span>
                       </div>
-                      <div className="inline-flex items-center gap-2">
-                        <CalendarDays className="h-4 w-4" />
-                        <span>{formatPublishDate(article.publishedAt)}</span>
-                      </div>
-                    </div>
-                    <div className="inline-flex items-center gap-2 text-sm text-slate-500">
-                      <MapPin className="h-4 w-4" />
-                      <span>{article.location ?? 'Destinasi pilihan'}</span>
                     </div>
                     <Button asChild variant="secondary" className="mt-auto w-full rounded-2xl">
                       <Link to={`/article/${article.documentId}`}>Baca detail</Link>
